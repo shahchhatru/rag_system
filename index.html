@@ -1,525 +1,1790 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Customer Support Chatbot | Professional RAG Solutions</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumDev | Next-Generation Development Collective</title>
+    <meta name="description" content="QuantumDev is a forward-thinking development team building digital experiences with cutting-edge technology and innovative approaches.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="web development, e-commerce solutions, web applications, mobile-first design, backend development, React, Next.js, Node.js, MongoDB, AWS">
+    <meta name="author" content="QuantumDev">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="QuantumDev | Next-Generation Development Collective">
+    <meta property="og:description" content="QuantumDev creates cutting-edge digital experiences with forward-thinking technology and innovative development approaches.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quantumdev.com">
+    <meta property="og:image" content="https://quantumdev.com/images/og-image.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="QuantumDev | Next-Generation Development Collective">
+    <meta name="twitter:description" content="QuantumDev creates cutting-edge digital experiences with forward-thinking technology and innovative development approaches.">
+    <meta name="twitter:image" content="https://quantumdev.com/images/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://quantumdev.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <style type="text/tailwindcss">
-      @layer utilities {
-        .text-gradient {
-          @apply bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent;
-        }
-        .glass-effect {
-          @apply bg-white/5 backdrop-blur-lg border border-white/10;
-        }
-      }
-    </style>
-  </head>
-  <body class="bg-slate-950 text-slate-100 antialiased">
     
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #06b6d4;
+            --accent: #8b5cf6;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .quantum-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .holographic-border {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holographic-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: hologram-scan 3s linear infinite;
+        }
+
+        @keyframes hologram-scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .neural-grid {
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.15) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .quantum-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .quantum-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 80px rgba(59, 130, 246, 0.1);
+        }
+
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .particle-field {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .neural-connection {
+            position: relative;
+        }
+
+        .neural-connection::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .neural-connection:hover::after {
+            opacity: 1;
+        }
+
+        .quantum-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hologram-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hologram-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: hologram-sweep 4s linear infinite;
+        }
+
+        @keyframes hologram-sweep {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .morphing-grid {
+            background: 
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: grid-morph 20s linear infinite;
+        }
+
+        @keyframes grid-morph {
+            0%, 100% { background-size: 30px 30px; }
+            50% { background-size: 35px 35px; }
+        }
+
+        .quantum-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .quantum-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .quantum-button:hover::before {
+            left: 100%;
+        }
+
+        .neural-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 3s ease-in-out forwards;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .quantum-nav {
+            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-padding {
+            padding: 6rem 0;
+        }
+        
+        /* NEW ANIMATION STYLES */
+        .light-ray {
+            position: absolute;
+            width: 2px;
+            height: 0;
+            background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+            opacity: 0;
+            transform-origin: bottom center;
+            filter: blur(1px);
+            z-index: 5;
+        }
+        
+        .light-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0;
+            filter: blur(1px);
+            z-index: 5;
+        }
+        
+        .it-word-container {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .it-letter {
+            position: absolute;
+            font-size: 120px;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--primary);
+            opacity: 0;
+        }
+        
+        .it-letter.i {
+            left: 30%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .it-letter.t {
+            left: 60%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .quantum-pulse {
+            animation: quantum-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes quantum-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        .light-trail {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            filter: blur(1px);
+            z-index: 5;
+        }
+        
+        .energy-orb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), transparent 70%);
+            opacity: 0;
+            filter: blur(3px);
+            z-index: 5;
+        }
+        
+        .message-container {
+            position: absolute;
+            z-index: 10;
+            pointer-events: none;
+            text-align: center;
+        }
+        
+        .message-text {
+            font-size: 48px;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--primary);
+            opacity: 0;
+        }
+        
+        /* CHATBOT STYLES - FIXED POSITIONING */
+        .quantum-chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .chatbot-toggle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chatbot-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .chatbot-toggle:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+        
+        .chatbot-toggle i {
+            color: white;
+            width: 30px;
+            height: 30px;
+        }
+        
+        .chatbot-container {
+            position: absolute;
+            bottom: 10px;
+            right: 0;
+            width: 380px;
+            height: 500px; /* Reduced height for better positioning */
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(59, 130, 246, 0.2);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-container.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .chatbot-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.8);
+        }
+        
+        .chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .chatbot-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chatbot-avatar i {
+            color: white;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .chatbot-info h3 {
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .chatbot-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .chatbot-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            animation: messageAppear 0.3s ease;
+            position: relative;
+        }
+        
+        @keyframes messageAppear {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(59, 130, 246, 0.15);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            background: rgba(30, 41, 59, 0.7);
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-typing {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 16px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            max-width: 80px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: typingPulse 1.5s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingPulse {
+            0%, 60%, 100% { transform: scale(1); opacity: 0.7; }
+            30% { transform: scale(1.2); opacity: 1; }
+        }
+        
+        .chatbot-input {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .chatbot-input input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        
+        .chatbot-input input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .chatbot-send {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .chatbot-send:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .chatbot-send i {
+            color: white;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 20px 16px;
+        }
+        
+        .suggestion-chip {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            padding: 8px 16px;
+            font-size: 12px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .suggestion-chip:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .neural-connection-indicator {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid var(--background);
+            animation: neuralPulse 2s infinite;
+        }
+        
+        @keyframes neuralPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .quantum-chatbot {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .chatbot-container {
+                width: calc(100vw - 40px);
+                height: 60vh;
+                right: 0;
+                bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Particle Field -->
+    <div class="particle-field" id="particleField"></div>
+    
+    <!-- Light Animation Container -->
+    <div id="lightAnimation" class="fixed inset-0 pointer-events-none z-5"></div>
+    
+    <!-- IT Words Containers for different sections -->
+    <div class="it-word-container" id="itWordsHero" style="top: 60%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="it-letter i">I</div>
+        <div class="it-letter t">T</div>
+    </div>
+    
+    <div class="it-word-container" id="itWordsServices" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="it-letter i">I</div>
+        <div class="it-letter t">T</div>
+    </div>
+    
+    <div class="it-word-container" id="itWordsTech" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="it-letter i">I</div>
+        <div class="it-letter t">T</div>
+    </div>
+    
+    <!-- Message Containers -->
+    <div class="message-container" id="messageHero" style="top: 75%; left: 50%; transform: translateX(-50%);">
+        <div class="message-text">BUILDING FUTURE</div>
+    </div>
+    
+    <!-- <div class="message-container" id="messageServices" style="top: 80%; left: 50%; transform: translateX(-50%);">
+        <div class="message-text">INNOVATION DRIVEN</div>
+    </div> -->
+    
+    <div class="message-container" id="messageTech" style="top: 80%; left: 50%; transform: translateX(-50%);">
+        <div class="message-text">TECHNOLOGY FIRST</div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-effect">
-      <div class="container mx-auto px-6 py-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-              </svg>
+    <nav class="quantum-nav fixed top-0 w-full z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center">
+                        <i data-lucide="atom" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">QuantumDev</span>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#services" class="text-slate-300 hover:text-white transition-colors neural-connection py-2 px-4 rounded-lg">Services</a>
+                    <a href="#tech" class="text-slate-300 hover:text-white transition-colors neural-connection py-2 px-4 rounded-lg">Technology</a>
+                    <a href="#projects" class="text-slate-300 hover:text-white transition-colors neural-connection py-2 px-4 rounded-lg">Projects</a>
+                    <!-- <a href="#process" class="text-slate-300 hover:text-white transition-colors neural-connection py-2 px-4 rounded-lg">Process</a> -->
+                </div>
+
+                <a href="#contact" class="quantum-button px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+                    Start Project
+                </a>
             </div>
-            <span class="text-xl font-bold">AI Support Pro</span>
-          </div>
-          <a href="#contact" class="px-6 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-violet-500/50 transition-all duration-300">
-            Get Started
-          </a>
         </div>
-      </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      <!-- Animated gradient background -->
-      <div class="absolute inset-0 bg-gradient-to-br from-violet-950 via-slate-950 to-cyan-950"></div>
-      
-      <!-- Grid overlay -->
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-      
-      <!-- Animated orbs -->
-      <div class="absolute inset-0 overflow-hidden">
-        <div class="orb-1 absolute w-96 h-96 bg-violet-500/30 rounded-full blur-3xl top-20 -left-20"></div>
-        <div class="orb-2 absolute w-[32rem] h-[32rem] bg-fuchsia-500/20 rounded-full blur-3xl bottom-0 -right-32"></div>
-        <div class="orb-3 absolute w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl top-1/3 right-1/4"></div>
-      </div>
-      
-      <!-- Hero content -->
-      <div class="relative z-10 container mx-auto px-6 text-center hero-content">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-effect mb-8 badge">
-          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium">Powered by Advanced RAG Technology</span>
-        </div>
-        
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight hero-title">
-          Transform Customer Support<br/>
-          <span class="text-gradient">With AI Intelligence</span>
-        </h1>
-        
-        <p class="text-lg md:text-xl text-slate-400 mb-12 max-w-3xl mx-auto hero-subtitle">
-          Build custom AI chatbots that understand your products, engage customers intelligently, and drive conversions 24/7
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center hero-buttons">
-          <a href="#contact" class="px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105">
-            Start Your Project
-          </a>
-          <a href="#portfolio" class="px-8 py-4 glass-effect rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300">
-            View Portfolio
-          </a>
-        </div>
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 neural-grid">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <!-- Animated Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full quantum-glass mb-8 holographic-border">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium">Next-Generation Development</span>
+            </div>
+            
+            <!-- Main Heading with Animation -->
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                We Build<br>
+                <span class="quantum-text">Digital Futures</span>
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="text-xl md:text-2xl text-slate-400 mb-12 max-w-4xl mx-auto leading-relaxed">
+                QuantumDev creates cutting-edge digital experiences with forward-thinking technology 
+                and innovative development approaches.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+                <a href="#projects" class="quantum-button px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105">
+                    View Our Work
+                </a>
+                <a href="#contact" class="quantum-button px-8 py-4 quantum-glass rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300">
+                    Start Your Project
+                </a>
+            </div>
 
-        <!-- Stats -->
-        <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto mt-16 stats">
-          <div>
-            <div class="text-3xl md:text-4xl font-bold text-gradient">98%</div>
-            <div class="text-sm text-slate-400 mt-1">Customer Satisfaction</div>
-          </div>
-          <div>
-            <div class="text-3xl md:text-4xl font-bold text-gradient">24/7</div>
-            <div class="text-sm text-slate-400 mt-1">Support Availability</div>
-          </div>
-          <div>
-            <div class="text-3xl md:text-4xl font-bold text-gradient">80%</div>
-            <div class="text-sm text-slate-400 mt-1">Cost Reduction</div>
-          </div>
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+                <div class="text-center floating" style="animation-delay: 0s;">
+                    <div class="text-3xl md:text-4xl font-bold quantum-text">50+</div>
+                    <div class="text-sm text-slate-400 mt-2">Projects Completed</div>
+                </div>
+                <div class="text-center floating" style="animation-delay: 1s;">
+                    <div class="text-3xl md:text-4xl font-bold quantum-text">24/7</div>
+                    <div class="text-sm text-slate-400 mt-2">Quantum Support</div>
+                </div>
+                <div class="text-center floating" style="animation-delay: 2s;">
+                    <div class="text-3xl md:text-4xl font-bold quantum-text">100%</div>
+                    <div class="text-sm text-slate-400 mt-2">Client Satisfaction</div>
+                </div>
+                <div class="text-center floating" style="animation-delay: 3s;">
+                    <div class="text-3xl md:text-4xl font-bold quantum-text">2W</div>
+                    <div class="text-sm text-slate-400 mt-2">Avg. Delivery</div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="relative py-24 bg-slate-950">
-      <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
-          <span class="text-violet-400 font-semibold text-sm uppercase tracking-wider">Core Capabilities</span>
-          <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6 section-title">
-            Everything Your Business Needs
-          </h2>
-          <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-            Advanced AI solutions tailored to elevate your customer experience
-          </p>
+    <!-- Services Section -->
+    <section id="services" class="section-padding bg-slate-900 relative">
+        <div class="morphing-grid absolute inset-0"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-blue-400 font-semibold text-sm uppercase tracking-wider">Our Services</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">
+                    Advanced Development Solutions
+                </h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                    We specialize in creating custom digital solutions with cutting-edge technology.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="quantum-card quantum-glass rounded-2xl p-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="shopping-cart" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">E-commerce Solutions</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Advanced online stores with AI-powered recommendations and seamless payment processing.
+                    </p>
+                </div>
+
+                <div class="quantum-card quantum-glass rounded-2xl p-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="globe" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Web Applications</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Dynamic, interactive web apps with real-time features and intuitive interfaces.
+                    </p>
+                </div>
+
+                <div class="quantum-card quantum-glass rounded-2xl p-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="smartphone" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Mobile-First Design</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Responsive designs optimized for all devices with exceptional mobile performance.
+                    </p>
+                </div>
+
+                <div class="quantum-card quantum-glass rounded-2xl p-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="database" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Backend Development</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Robust server architecture, APIs, and database solutions for scalable applications.
+                    </p>
+                </div>
+            </div>
         </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Feature 1 -->
-          <div class="feature-card group glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all duration-300">
-            <div class="w-14 h-14 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Intelligent Product Recommendations</h3>
-            <p class="text-slate-400 leading-relaxed">RAG-powered system that analyzes customer intent and suggests relevant products, boosting conversion rates by understanding context.</p>
-          </div>
-
-          <!-- Feature 2 -->
-          <div class="feature-card group glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all duration-300">
-            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Natural Conversation Flow</h3>
-            <p class="text-slate-400 leading-relaxed">Advanced language models deliver human-like interactions that understand context, maintain conversation history, and provide accurate responses.</p>
-          </div>
-
-          <!-- Feature 3 -->
-          <div class="feature-card group glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all duration-300">
-            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Seamless Integration</h3>
-            <p class="text-slate-400 leading-relaxed">Quick deployment across Shopify, WooCommerce, WordPress, or custom platforms. Full API access for complete customization.</p>
-          </div>
-
-          <!-- Feature 4 -->
-          <div class="feature-card group glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all duration-300">
-            <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Analytics Dashboard</h3>
-            <p class="text-slate-400 leading-relaxed">Track conversation metrics, customer satisfaction, popular queries, and conversion rates to optimize performance continuously.</p>
-          </div>
-
-          <!-- Feature 5 -->
-          <div class="feature-card group glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all duration-300">
-            <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Multi-Language Support</h3>
-            <p class="text-slate-400 leading-relaxed">Serve global customers with AI that understands and responds in multiple languages, breaking down communication barriers.</p>
-          </div>
-
-          <!-- Feature 6 -->
-          <div class="feature-card group glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all duration-300">
-            <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Enterprise Security</h3>
-            <p class="text-slate-400 leading-relaxed">Bank-level encryption, GDPR compliance, and secure data handling ensure your customer information stays protected.</p>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- Process Section -->
-    <section class="relative py-24 bg-gradient-to-b from-slate-950 to-slate-900">
-      <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
-          <span class="text-cyan-400 font-semibold text-sm uppercase tracking-wider">Simple Process</span>
-          <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6 process-title">
-            From Concept to Launch in 3 Steps
-          </h2>
+    <!-- Technology Stack -->
+    <section id="tech" class="section-padding bg-slate-950 relative">
+        <div class="neural-grid absolute inset-0"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-cyan-400 font-semibold text-sm uppercase tracking-wider">Our Stack</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">
+                    Advanced Technology Stack
+                </h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                    We work with cutting-edge technologies to build fast, scalable, and maintainable applications.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="quantum-card quantum-glass rounded-xl p-6 text-center">
+                    <i data-lucide="atom" class="w-12 h-12 mx-auto mb-4 text-blue-400"></i>
+                    <p class="font-semibold">React & Next.js</p>
+                    <p class="text-slate-400 text-sm mt-2">Frontend Frameworks</p>
+                </div>
+                <div class="quantum-card quantum-glass rounded-xl p-6 text-center">
+                    <i data-lucide="server" class="w-12 h-12 mx-auto mb-4 text-green-400"></i>
+                    <p class="font-semibold">Node.js</p>
+                    <p class="text-slate-400 text-sm mt-2">Backend Runtime</p>
+                </div>
+                <div class="quantum-card quantum-glass rounded-xl p-6 text-center">
+                    <i data-lucide="database" class="w-12 h-12 mx-auto mb-4 text-purple-400"></i>
+                    <p class="font-semibold">MongoDB & SQL</p>
+                    <p class="text-slate-400 text-sm mt-2">Database Solutions</p>
+                </div>
+                <div class="quantum-card quantum-glass rounded-xl p-6 text-center">
+                    <i data-lucide="cloud" class="w-12 h-12 mx-auto mb-4 text-cyan-400"></i>
+                    <p class="font-semibold">AWS & Vercel</p>
+                    <p class="text-slate-400 text-sm mt-2">Cloud Deployment</p>
+                </div>
+            </div>
         </div>
-        
-        <div class="max-w-4xl mx-auto">
-          <!-- Step 1 -->
-          <div class="process-step relative flex flex-col md:flex-row gap-8 mb-12 group">
-            <div class="flex-shrink-0">
-              <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-violet-500/50 group-hover:scale-110 transition-transform">
-                01
-              </div>
-            </div>
-            <div class="flex-1 glass-effect rounded-2xl p-8">
-              <h3 class="text-2xl font-bold mb-3">Discovery & Data Collection</h3>
-              <p class="text-slate-400 leading-relaxed mb-4">Share your product catalog, FAQs, support documents, and business knowledge. I'll analyze your unique requirements and create a comprehensive data structure optimized for RAG technology.</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-violet-500/20 text-violet-300 rounded-full text-sm">Product Data</span>
-                <span class="px-3 py-1 bg-violet-500/20 text-violet-300 rounded-full text-sm">FAQs</span>
-                <span class="px-3 py-1 bg-violet-500/20 text-violet-300 rounded-full text-sm">Documentation</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 2 -->
-          <div class="process-step relative flex flex-col md:flex-row gap-8 mb-12 group">
-            <div class="flex-shrink-0">
-              <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-cyan-500/50 group-hover:scale-110 transition-transform">
-                02
-              </div>
-            </div>
-            <div class="flex-1 glass-effect rounded-2xl p-8">
-              <h3 class="text-2xl font-bold mb-3">AI Training & Development</h3>
-              <p class="text-slate-400 leading-relaxed mb-4">I build a custom RAG pipeline with vector embeddings, implement intelligent retrieval systems, and train the chatbot to understand your business context for accurate, helpful responses.</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">RAG Setup</span>
-                <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">Vector DB</span>
-                <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">LLM Integration</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 3 -->
-          <div class="process-step relative flex flex-col md:flex-row gap-8 group">
-            <div class="flex-shrink-0">
-              <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-emerald-500/50 group-hover:scale-110 transition-transform">
-                03
-              </div>
-            </div>
-            <div class="flex-1 glass-effect rounded-2xl p-8">
-              <h3 class="text-2xl font-bold mb-3">Testing & Deployment</h3>
-              <p class="text-slate-400 leading-relaxed mb-4">Comprehensive testing phase where you can interact with the chatbot, request refinements, and ensure perfect alignment with your brand. Once approved, I handle seamless integration and provide ongoing support.</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-sm">QA Testing</span>
-                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-sm">Integration</span>
-                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-sm">Support</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- Benefits Section -->
-    <section class="relative py-24 bg-slate-900">
-      <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
-          <span class="text-fuchsia-400 font-semibold text-sm uppercase tracking-wider">Business Impact</span>
-          <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6 benefits-title">
-            Measurable Results for Your Business
-          </h2>
+    <!-- Project Showcase -->
+    <section id="projects" class="section-padding bg-slate-900 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-cyan-400 font-semibold text-sm uppercase tracking-wider">Our Work</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">
+                    Featured Projects
+                </h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                    Explore our portfolio of innovative web development projects.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 - E-commerce -->
+                <div class="quantum-card quantum-glass rounded-2xl overflow-hidden">
+                    <div class="hologram-effect h-48 bg-gradient-to-br from-blue-500 to-purple-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">E-commerce</span>
+                            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-sm">Full-Stack</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">NexusStore - Modern E-commerce</h3>
+                        <p class="text-slate-400 mb-4">
+                            Complete e-commerce solution with AI recommendations and seamless payment processing.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">React</span>
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">Node.js</span>
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 - Web App -->
+                <div class="quantum-card quantum-glass rounded-2xl overflow-hidden">
+                    <div class="hologram-effect h-48 bg-gradient-to-br from-cyan-400 to-blue-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">Web App</span>
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">SaaS</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">TaskFlow - Project Management</h3>
+                        <p class="text-slate-400 mb-4">
+                            Collaborative project management tool with real-time updates and team collaboration.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">Next.js</span>
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">Socket.io</span>
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 - Dashboard -->
+                <div class="quantum-card quantum-glass rounded-2xl overflow-hidden">
+                    <div class="hologram-effect h-48 bg-gradient-to-br from-purple-500 to-blue-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Dashboard</span>
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm">Analytics</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">DataViz - Analytics Dashboard</h3>
+                        <p class="text-slate-400 mb-4">
+                            Interactive analytics dashboard with data visualization and real-time metrics.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">Vue.js</span>
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">D3.js</span>
+                            <span class="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">Express.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          <div class="benefit-card glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
-            <div class="text-4xl mb-4">🎯</div>
-            <h3 class="text-lg font-bold mb-2">Higher Conversion Rates</h3>
-            <p class="text-slate-400 text-sm">Smart product recommendations guide customers to the right purchases, increasing average order value.</p>
-          </div>
-
-          <div class="benefit-card glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
-            <div class="text-4xl mb-4">⚡</div>
-            <h3 class="text-lg font-bold mb-2">Instant Response Time</h3>
-            <p class="text-slate-400 text-sm">Eliminate wait times with immediate, accurate answers that keep customers engaged and satisfied.</p>
-          </div>
-
-          <div class="benefit-card glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
-            <div class="text-4xl mb-4">💰</div>
-            <h3 class="text-lg font-bold mb-2">Reduced Support Costs</h3>
-            <p class="text-slate-400 text-sm">Automate routine inquiries and free your team to focus on complex, high-value customer interactions.</p>
-          </div>
-
-          <div class="benefit-card glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
-            <div class="text-4xl mb-4">🌐</div>
-            <h3 class="text-lg font-bold mb-2">Global Reach</h3>
-            <p class="text-slate-400 text-sm">Serve customers worldwide with multi-language support and 24/7 availability across all time zones.</p>
-          </div>
-
-          <div class="benefit-card glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
-            <div class="text-4xl mb-4">📊</div>
-            <h3 class="text-lg font-bold mb-2">Actionable Insights</h3>
-            <p class="text-slate-400 text-sm">Gain valuable data on customer needs, pain points, and preferences through conversation analytics.</p>
-          </div>
-
-          <div class="benefit-card glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
-            <div class="text-4xl mb-4">🚀</div>
-            <h3 class="text-lg font-bold mb-2">Scalable Solution</h3>
-            <p class="text-slate-400 text-sm">Handle unlimited conversations simultaneously without compromising quality or response time.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tech Stack Section -->
-    <section class="relative py-24 bg-gradient-to-b from-slate-900 to-slate-950">
-      <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
-          <span class="text-violet-400 font-semibold text-sm uppercase tracking-wider">Technology</span>
-          <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6 tech-title">
-            Built with Industry-Leading Tools
-          </h2>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto tech-items">
-          <div class="glass-effect rounded-xl p-6 text-center hover:bg-white/10 transition-all">
-            <div class="text-3xl mb-3">🤖</div>
-            <p class="font-semibold">OpenAI GPT-4</p>
-          </div>
-          <div class="glass-effect rounded-xl p-6 text-center hover:bg-white/10 transition-all">
-            <div class="text-3xl mb-3">🔍</div>
-            <p class="font-semibold">Vector Search</p>
-          </div>
-          <div class="glass-effect rounded-xl p-6 text-center hover:bg-white/10 transition-all">
-            <div class="text-3xl mb-3">⚙️</div>
-            <p class="font-semibold">LangChain</p>
-          </div>
-          <div class="glass-effect rounded-xl p-6 text-center hover:bg-white/10 transition-all">
-            <div class="text-3xl mb-3">💾</div>
-            <p class="font-semibold">Pinecone DB</p>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- CTA Section -->
-    <section id="contact" class="relative py-24 overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-violet-600 via-fuchsia-600 to-cyan-600"></div>
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-      
-      <div class="relative container mx-auto px-6 text-center cta-content">
-        <h2 class="text-4xl md:text-6xl font-bold mb-6">
-          Ready to Elevate Your Customer Experience?
-        </h2>
-        <p class="text-xl md:text-2xl mb-12 max-w-3xl mx-auto opacity-90">
-          Let's build an intelligent AI chatbot that understands your business, delights your customers, and drives real growth.
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-          <a href="https://www.fiverr.com" target="_blank" class="px-10 py-5 bg-white text-violet-600 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-2xl hover:shadow-white/50">
-            Order on Fiverr
-          </a>
-          <a href="mailto:your@email.com" class="px-10 py-5 bg-white/10 backdrop-blur-sm border-2 border-white rounded-full font-bold text-lg hover:bg-white/20 transition-all">
-            Contact for Custom Quote
-          </a>
+    <section id="contact" class="section-padding bg-slate-950 relative">
+        <div class="morphing-grid absolute inset-0"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">
+                Ready to Start Your Project?
+            </h2>
+            <p class="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto">
+                Let's discuss your ideas and turn them into a powerful digital solution.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="https://www.fiverr.com" target="_blank" class="quantum-button px-10 py-5 bg-white text-slate-900 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-2xl">
+                    Hire on Fiverr
+                </a>
+                <a href="mailto:contact@quantumdev.com" class="quantum-button px-10 py-5 quantum-glass rounded-full font-bold text-lg hover:bg-white/10 transition-all">
+                    Contact Directly
+                </a>
+            </div>
         </div>
-        
-        <div class="flex items-center justify-center gap-8 text-sm opacity-80">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-            </svg>
-            <span>Fast Delivery</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-            </svg>
-            <span>Unlimited Revisions</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-            </svg>
-            <span>Ongoing Support</span>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 py-12 border-t border-white/10">
-      <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-              </svg>
+    <footer class="bg-slate-900 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center">
+                        <i data-lucide="atom" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="font-bold">QuantumDev</span>
+                </div>
+                <p class="text-slate-400 text-sm">
+                    © 2024 QuantumDev. Next-Generation Development Collective.
+                </p>
             </div>
-            <span class="font-bold">AI Support Pro</span>
-          </div>
-          <p class="text-slate-400 text-sm">
-            © 2025 Professional AI Solutions. Built with Advanced LLM & RAG Technology.
-          </p>
         </div>
-      </div>
     </footer>
 
+    <!-- Quantum AI Chatbot -->
+    <div class="quantum-chatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i data-lucide="message-circle"></i>
+            <div class="neural-connection-indicator"></div>
+        </div>
+        
+        <div class="chatbot-container" id="chatbotContainer">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <div class="chatbot-avatar">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <div class="chatbot-info">
+                        <h3>Quantum AI Assistant</h3>
+                        <p>Online • Ready to help</p>
+                    </div>
+                </div>
+                <div class="chatbot-actions">
+                    <button class="chatbot-close" id="chatbotClose">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot">
+                    Hello! I'm your Quantum AI assistant. How can I help you today?
+                </div>
+                <div class="message-typing" id="typingIndicator" style="display: none;">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+            
+            <div class="suggestion-chips" id="suggestionChips">
+                <div class="suggestion-chip" data-message="What services do you offer?">Services</div>
+                <div class="suggestion-chip" data-message="Tell me about your technology stack">Technology</div>
+                <div class="suggestion-chip" data-message="How do I start a project?">Start a Project</div>
+                <div class="suggestion-chip" data-message="What are your pricing options?">Pricing</div>
+            </div>
+            
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Ask me anything...">
+                <button class="chatbot-send" id="chatbotSend">
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-      gsap.registerPlugin(ScrollTrigger);
+        // Initialize Lucide icons
+        lucide.createIcons();
 
-      // Navigation reveal
-      gsap.from('nav', {
-        y: -100,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      });
+        // Initialize GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
 
-      // Hero animations
-      const heroTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      
-      heroTimeline
-        .from('.badge', { y: 30, opacity: 0, duration: 0.8 })
-        .from('.hero-title', { y: 50, opacity: 0, duration: 1 }, '-=0.4')
-        .from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.8 }, '-=0.6')
-        .from('.hero-buttons', { y: 30, opacity: 0, duration: 0.8 }, '-=0.4')
-        .from('.stats', { y: 30, opacity: 0, duration: 0.8 }, '-=0.4');
+        // Particle field animation
+        function createParticles() {
+            const particleField = document.getElementById('particleField');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 20}s`;
+                particleField.appendChild(particle);
+                
+                // Animate particle
+                gsap.to(particle, {
+                    opacity: 0.6,
+                    duration: 1,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut",
+                    delay: Math.random() * 5
+                });
+                
+                gsap.to(particle, {
+                    x: "+=100",
+                    y: "+=100",
+                    duration: 20 + Math.random() * 20,
+                    repeat: -1,
+                    ease: "none"
+                });
+            }
+        }
 
-      // Floating orbs animation
-      gsap.to('.orb-1', {
-        x: 100,
-        y: -80,
-        duration: 8,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-
-      gsap.to('.orb-2', {
-        x: -80,
-        y: 60,
-        duration: 10,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-
-      gsap.to('.orb-3', {
-        x: 60,
-        y: 80,
-        scale: 1.3,
-        duration: 7,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-
-      // Section titles
-      gsap.utils.toArray('.section-title, .process-title, .benefits-title, .tech-title').forEach(title => {
-        gsap.from(title, {
-          scrollTrigger: {
-            trigger: title,
-            start: 'top 85%'
-          },
-          y: 50,
-          opacity: 0,
-          duration: 1,
-          ease: 'power3.out'
+        // Card animations on scroll
+        gsap.utils.toArray('.quantum-card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
         });
-      });
 
-      // Feature cards
-      gsap.from('.feature-card', {
-        scrollTrigger: {
-          trigger: '.feature-card',
-          start: 'top 80%'
-        },
-        y: 80,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out'
-      });
+        // Text animations
+        gsap.from('.quantum-text', {
+            scrollTrigger: {
+                trigger: '.quantum-text',
+                start: 'top 80%'
+            },
+            backgroundPosition: '200% 0%',
+            duration: 2,
+            ease: 'power2.inOut'
+        });
 
-      // Process steps
-      gsap.from('.process-step', {
-        scrollTrigger: {
-          trigger: '.process-step',
-          start: 'top 80%'
-        },
-        x: -80,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.25,
-        ease: 'power3.out'
-      });
+        // Neural connection effect
+        document.querySelectorAll('.neural-connection').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                gsap.to(link, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+            
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+        });
 
-      // Benefit cards
-      gsap.from('.benefit-card', {
-        scrollTrigger: {
-          trigger: '.benefit-card',
-          start: 'top 80%'
-        },
-        scale: 0.9,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'back.out(1.7)'
-      });
+        // NEW: Advanced Light Animation System
+        function createLightAnimation() {
+            const container = document.getElementById('lightAnimation');
+            
+            // Create light rays (shorter and more controlled)
+            for (let i = 0; i < 10; i++) {
+                const ray = document.createElement('div');
+                ray.className = 'light-ray';
+                container.appendChild(ray);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 150; // Shorter rays
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                
+                gsap.set(ray, {
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    rotation: angle * 180 / Math.PI
+                });
+                
+                // Animate ray
+                const tl = gsap.timeline({
+                    delay: i * 0.2,
+                    repeat: -1,
+                    repeatDelay: 8
+                });
+                
+                tl.to(ray, {
+                    height: distance,
+                    opacity: 0.6,
+                    duration: 0.5,
+                    ease: "power2.out"
+                })
+                .to(ray, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in"
+                });
+            }
+            
+            // Create energy particles (more subtle)
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'light-particle';
+                container.appendChild(particle);
+                
+                gsap.set(particle, {
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    scale: 0
+                });
+                
+                // Animate particle
+                const tl = gsap.timeline({
+                    delay: Math.random() * 5,
+                    repeat: -1,
+                    repeatDelay: Math.random() * 5
+                });
+                
+                tl.to(particle, {
+                    scale: 1,
+                    opacity: 0.6,
+                    duration: 0.5,
+                    ease: "power2.out"
+                })
+                .to(particle, {
+                    x: "+=50",
+                    y: "-=50",
+                    duration: 2,
+                    ease: "power1.inOut"
+                })
+                .to(particle, {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.in"
+                });
+            }
+            
+            // Create energy orbs (subtle and smaller)
+            for (let i = 0; i < 5; i++) {
+                const orb = document.createElement('div');
+                orb.className = 'energy-orb';
+                container.appendChild(orb);
+                
+                gsap.set(orb, {
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    scale: 0
+                });
+                
+                // Animate orb
+                const tl = gsap.timeline({
+                    delay: Math.random() * 10,
+                    repeat: -1,
+                    repeatDelay: Math.random() * 15
+                });
+                
+                tl.to(orb, {
+                    scale: 0.8,
+                    opacity: 0.5,
+                    duration: 1,
+                    ease: "power2.out"
+                })
+                .to(orb, {
+                    x: "+=100",
+                    y: "-=50",
+                    duration: 3,
+                    ease: "power1.inOut"
+                })
+                .to(orb, {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power2.in"
+                });
+            }
+        }
 
-      // Tech items
-      gsap.from('.tech-items > div', {
-        scrollTrigger: {
-          trigger: '.tech-items',
-          start: 'top 80%'
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power3.out'
-      });
+        // IT Words Formation Animation for different sections
+        function createITAnimation() {
+            // Hero section animation
+            const heroAnimation = () => {
+                const itContainer = document.getElementById('itWordsHero');
+                const messageContainer = document.getElementById('messageHero');
+                const letters = itContainer.querySelectorAll('.it-letter');
+                const message = messageContainer.querySelector('.message-text');
+                
+                // Reset elements
+                gsap.set(letters, { opacity: 0, scale: 0 });
+                gsap.set(message, { opacity: 0, scale: 0 });
+                
+                // Create particles that form the IT letters
+                for (let i = 0; i < 100; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'light-particle';
+                    document.getElementById('lightAnimation').appendChild(particle);
+                    
+                    // Start from random positions
+                    gsap.set(particle, {
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
+                        scale: 0
+                    });
+                    
+                    // Calculate target position based on letter shape
+                    let targetX, targetY;
+                    const letter = i < 50 ? 'I' : 'T';
+                    const containerRect = itContainer.getBoundingClientRect();
+                    
+                    if (letter === 'I') {
+                        // I shape - vertical line
+                        targetX = containerRect.left + containerRect.width * 0.3;
+                        targetY = containerRect.top + containerRect.height * 0.5 - 30 + (i % 50) * 1.2;
+                    } else {
+                        // T shape
+                        if (i < 75) {
+                            // Horizontal part of T
+                            targetX = containerRect.left + containerRect.width * 0.6 + (i % 25) * 2;
+                            targetY = containerRect.top + containerRect.height * 0.5 - 30;
+                        } else {
+                            // Vertical part of T
+                            targetX = containerRect.left + containerRect.width * 0.7;
+                            targetY = containerRect.top + containerRect.height * 0.5 - 30 + ((i - 75) % 25) * 2.4;
+                        }
+                    }
+                    
+                    // Animate particle to form letter
+                    const tl = gsap.timeline({
+                        delay: i * 0.03
+                    });
+                    
+                    tl.to(particle, {
+                        scale: 1,
+                        opacity: 0.8,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    })
+                    .to(particle, {
+                        x: targetX,
+                        y: targetY,
+                        duration: 1.5,
+                        ease: "power2.inOut"
+                    })
+                    .to(particle, {
+                        scale: 0,
+                        opacity: 0,
+                        duration: 0.5,
+                        delay: 0.5,
+                        ease: "power2.in"
+                    });
+                }
+                
+                // Reveal the actual IT letters
+                gsap.to(letters, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1,
+                    delay: 2,
+                    ease: "back.out(1.7)"
+                });
+                
+                // Show message
+                gsap.to(message, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1,
+                    delay: 2.5,
+                    ease: "back.out(1.7)"
+                });
+                
+                // Pulse effect on letters and message
+                gsap.to([letters, message], {
+                    scale: 1.05,
+                    duration: 0.8,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut",
+                    delay: 3.5
+                });
+                
+                // Hide elements after a while
+                gsap.to([letters, message], {
+                    opacity: 0,
+                    scale: 0,
+                    duration: 0.5,
+                    delay: 8,
+                    onComplete: () => {
+                        // Restart the animation after a delay
+                        setTimeout(heroAnimation, 8000);
+                    }
+                });
+            };
+            
+            // Start the hero animation
+            setTimeout(heroAnimation, 2000);
+            
+            // Services section animation (triggered on scroll)
+            ScrollTrigger.create({
+                trigger: "#services",
+                start: "top 60%",
+                onEnter: () => {
+                    const itContainer = document.getElementById('itWordsServices');
+                    const messageContainer = document.getElementById('messageServices');
+                    const letters = itContainer.querySelectorAll('.it-letter');
+                    const message = messageContainer.querySelector('.message-text');
+                    
+                    // Reset elements
+                    gsap.set(letters, { opacity: 0, scale: 0 });
+                    gsap.set(message, { opacity: 0, scale: 0 });
+                    
+                    // Create particles that form the IT letters
+                    for (let i = 0; i < 80; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'light-particle';
+                        document.getElementById('lightAnimation').appendChild(particle);
+                        
+                        // Start from random positions
+                        gsap.set(particle, {
+                            x: Math.random() * window.innerWidth,
+                            y: Math.random() * window.innerHeight,
+                            scale: 0
+                        });
+                        
+                        // Calculate target position based on letter shape
+                        let targetX, targetY;
+                        const letter = i < 40 ? 'I' : 'T';
+                        const containerRect = itContainer.getBoundingClientRect();
+                        
+                        if (letter === 'I') {
+                            // I shape - vertical line
+                            targetX = containerRect.left + containerRect.width * 0.3;
+                            targetY = containerRect.top + containerRect.height * 0.5 - 30 + (i % 40) * 1.5;
+                        } else {
+                            // T shape
+                            if (i < 60) {
+                                // Horizontal part of T
+                                targetX = containerRect.left + containerRect.width * 0.6 + (i % 20) * 2.5;
+                                targetY = containerRect.top + containerRect.height * 0.5 - 30;
+                            } else {
+                                // Vertical part of T
+                                targetX = containerRect.left + containerRect.width * 0.7;
+                                targetY = containerRect.top + containerRect.height * 0.5 - 30 + ((i - 60) % 20) * 3;
+                            }
+                        }
+                        
+                        // Animate particle to form letter
+                        const tl = gsap.timeline({
+                            delay: i * 0.04
+                        });
+                        
+                        tl.to(particle, {
+                            scale: 1,
+                            opacity: 0.8,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        })
+                        .to(particle, {
+                            x: targetX,
+                            y: targetY,
+                            duration: 1.5,
+                            ease: "power2.inOut"
+                        })
+                        .to(particle, {
+                            scale: 0,
+                            opacity: 0,
+                            duration: 0.5,
+                            delay: 0.5,
+                            ease: "power2.in"
+                        });
+                    }
+                    
+                    // Reveal the actual IT letters
+                    gsap.to(letters, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 1,
+                        delay: 2,
+                        ease: "back.out(1.7)"
+                    });
+                    
+                    // Show message
+                    gsap.to(message, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 1,
+                        delay: 2.5,
+                        ease: "back.out(1.7)"
+                    });
+                    
+                    // Pulse effect on letters and message
+                    gsap.to([letters, message], {
+                        scale: 1.05,
+                        duration: 0.8,
+                        repeat: 3,
+                        yoyo: true,
+                        ease: "power1.inOut",
+                        delay: 3.5
+                    });
+                    
+                    // Hide elements after a while
+                    gsap.to([letters, message], {
+                        opacity: 0,
+                        scale: 0,
+                        duration: 0.5,
+                        delay: 7
+                    });
+                },
+                once: true
+            });
+            
+            // Tech section animation (triggered on scroll)
+            ScrollTrigger.create({
+                trigger: "#tech",
+                start: "top 60%",
+                onEnter: () => {
+                    const itContainer = document.getElementById('itWordsTech');
+                    const messageContainer = document.getElementById('messageTech');
+                    const letters = itContainer.querySelectorAll('.it-letter');
+                    const message = messageContainer.querySelector('.message-text');
+                    
+                    // Reset elements
+                    gsap.set(letters, { opacity: 0, scale: 0 });
+                    gsap.set(message, { opacity: 0, scale: 0 });
+                    
+                    // Create particles that form the IT letters
+                    for (let i = 0; i < 80; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'light-particle';
+                        document.getElementById('lightAnimation').appendChild(particle);
+                        
+                        // Start from random positions
+                        gsap.set(particle, {
+                            x: Math.random() * window.innerWidth,
+                            y: Math.random() * window.innerHeight,
+                            scale: 0
+                        });
+                        
+                        // Calculate target position based on letter shape
+                        let targetX, targetY;
+                        const letter = i < 40 ? 'I' : 'T';
+                        const containerRect = itContainer.getBoundingClientRect();
+                        
+                        if (letter === 'I') {
+                            // I shape - vertical line
+                            targetX = containerRect.left + containerRect.width * 0.3;
+                            targetY = containerRect.top + containerRect.height * 0.5 - 30 + (i % 40) * 1.5;
+                        } else {
+                            // T shape
+                            if (i < 60) {
+                                // Horizontal part of T
+                                targetX = containerRect.left + containerRect.width * 0.6 + (i % 20) * 2.5;
+                                targetY = containerRect.top + containerRect.height * 0.5 - 30;
+                            } else {
+                                // Vertical part of T
+                                targetX = containerRect.left + containerRect.width * 0.7;
+                                targetY = containerRect.top + containerRect.height * 0.5 - 30 + ((i - 60) % 20) * 3;
+                            }
+                        }
+                        
+                        // Animate particle to form letter
+                        const tl = gsap.timeline({
+                            delay: i * 0.04
+                        });
+                        
+                        tl.to(particle, {
+                            scale: 1,
+                            opacity: 0.8,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        })
+                        .to(particle, {
+                            x: targetX,
+                            y: targetY,
+                            duration: 1.5,
+                            ease: "power2.inOut"
+                        })
+                        .to(particle, {
+                            scale: 0,
+                            opacity: 0,
+                            duration: 0.5,
+                            delay: 0.5,
+                            ease: "power2.in"
+                        });
+                    }
+                    
+                    // Reveal the actual IT letters
+                    gsap.to(letters, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 1,
+                        delay: 2,
+                        ease: "back.out(1.7)"
+                    });
+                    
+                    // Show message
+                    gsap.to(message, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 1,
+                        delay: 2.5,
+                        ease: "back.out(1.7)"
+                    });
+                    
+                    // Pulse effect on letters and message
+                    gsap.to([letters, message], {
+                        scale: 1.05,
+                        duration: 0.8,
+                        repeat: 3,
+                        yoyo: true,
+                        ease: "power1.inOut",
+                        delay: 3.5
+                    });
+                    
+                    // Hide elements after a while
+                    gsap.to([letters, message], {
+                        opacity: 0,
+                        scale: 0,
+                        duration: 0.5,
+                        delay: 7
+                    });
+                },
+                once: true
+            });
+        }
 
-      // CTA section
-      gsap.from('.cta-content', {
-        scrollTrigger: {
-          trigger: '.cta-content',
-          start: 'top 80%'
-        },
-        scale: 0.95,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      });
+        // QUANTUM AI CHATBOT FUNCTIONALITY
+        function initChatbot() {
+            const chatbotToggle = document.getElementById('chatbotToggle');
+            const chatbotContainer = document.getElementById('chatbotContainer');
+            const chatbotClose = document.getElementById('chatbotClose');
+            const chatbotMessages = document.getElementById('chatbotMessages');
+            const chatbotInput = document.getElementById('chatbotInput');
+            const chatbotSend = document.getElementById('chatbotSend');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const suggestionChips = document.getElementById('suggestionChips');
+            
+            let isOpen = false;
+            
+            // Toggle chatbot visibility
+            chatbotToggle.addEventListener('click', () => {
+                if (!isOpen) {
+                    openChatbot();
+                } else {
+                    closeChatbot();
+                }
+            });
+            
+            // Close chatbot
+            chatbotClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeChatbot();
+            });
+            
+            // Send message on button click
+            chatbotSend.addEventListener('click', sendMessage);
+            
+            // Send message on Enter key
+            chatbotInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Suggestion chip click handler
+            suggestionChips.addEventListener('click', (e) => {
+                if (e.target.classList.contains('suggestion-chip')) {
+                    const message = e.target.getAttribute('data-message');
+                    addMessage(message, 'user');
+                    processUserMessage(message);
+                }
+            });
+            
+            function openChatbot() {
+                isOpen = true;
+                chatbotContainer.classList.add('active');
+                
+                // Animate opening
+                gsap.fromTo(chatbotContainer, 
+                    { opacity: 0, scale: 0.9, y: 20 },
+                    { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(1.7)" }
+                );
+                
+                // Add welcome message if first time
+                if (chatbotMessages.children.length <= 2) {
+                    setTimeout(() => {
+                        addMessage("Welcome to QuantumDev! I'm your AI assistant. How can I help you today?", 'bot');
+                    }, 500);
+                }
+            }
+            
+            function closeChatbot() {
+                isOpen = false;
+                
+                // Animate closing
+                gsap.to(chatbotContainer, {
+                    opacity: 0,
+                    scale: 0.9,
+                    y: 20,
+                    duration: 0.2,
+                    onComplete: () => {
+                        chatbotContainer.classList.remove('active');
+                    }
+                });
+            }
+            
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                messageDiv.textContent = text;
+                
+                chatbotMessages.appendChild(messageDiv);
+                scrollToBottom();
+                
+                // Animate message appearance
+                gsap.fromTo(messageDiv, 
+                    { opacity: 0, y: 10 },
+                    { opacity: 1, y: 0, duration: 0.3 }
+                );
+            }
+            
+            function showTypingIndicator() {
+                typingIndicator.style.display = 'flex';
+                scrollToBottom();
+            }
+            
+            function hideTypingIndicator() {
+                typingIndicator.style.display = 'none';
+            }
+            
+            function scrollToBottom() {
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+            
+            function sendMessage() {
+                const message = chatbotInput.value.trim();
+                if (message) {
+                    addMessage(message, 'user');
+                    chatbotInput.value = '';
+                    processUserMessage(message);
+                }
+            }
+            
+            function processUserMessage(message) {
+                showTypingIndicator();
+                
+                // Simulate AI processing delay
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    const response = generateResponse(message);
+                    addMessage(response, 'bot');
+                }, 1000 + Math.random() * 1000);
+            }
+            
+            function generateResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                
+                // Service-related queries
+                if (lowerMessage.includes('service') || lowerMessage.includes('what do you offer')) {
+                    return "We offer a range of advanced development services including E-commerce Solutions, Web Applications, Mobile-First Design, and Backend Development. Each solution is tailored to your specific needs using cutting-edge technology.";
+                }
+                
+                // Technology-related queries
+                if (lowerMessage.includes('technology') || lowerMessage.includes('tech stack') || lowerMessage.includes('what technology')) {
+                    return "Our technology stack includes React & Next.js for frontend, Node.js for backend, MongoDB & SQL for databases, and AWS & Vercel for cloud deployment. We stay current with the latest technologies to deliver optimal solutions.";
+                }
+                
+                // Project-related queries
+                if (lowerMessage.includes('project') || lowerMessage.includes('start a project') || lowerMessage.includes('how to begin')) {
+                    return "Starting a project is easy! You can either hire us directly on Fiverr or contact us via email. We'll schedule a consultation to discuss your requirements, timeline, and budget.";
+                }
+                
+                // Pricing-related queries
+                if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('how much')) {
+                    return "Our pricing varies based on project complexity and requirements. We offer competitive rates and can provide a detailed quote after understanding your project needs. Contact us for a personalized estimate.";
+                }
+                
+                // Contact-related queries
+                if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('get in touch')) {
+                    return "You can reach us at contact@quantumdev.com or hire us directly on Fiverr. We typically respond within 24 hours and offer free initial consultations.";
+                }
+                
+                // Timeline-related queries
+                if (lowerMessage.includes('time') || lowerMessage.includes('how long') || lowerMessage.includes('delivery')) {
+                    return "Project timelines depend on complexity, but our average delivery is around 2 weeks. We provide detailed project plans with milestones to keep you informed throughout the development process.";
+                }
+                
+                // Portfolio-related queries
+                if (lowerMessage.includes('portfolio') || lowerMessage.includes('work') || lowerMessage.includes('examples')) {
+                    return "You can view our featured projects in the 'Our Work' section above. We've delivered solutions for e-commerce, project management tools, analytics dashboards, and more.";
+                }
+                
+                // Default response
+                const defaultResponses = [
+                    "I'd be happy to help with that. Could you provide more details about your project?",
+                    "That's an interesting question. Let me connect you with the right information.",
+                    "QuantumDev specializes in creating cutting-edge digital solutions. How can we assist with your specific needs?",
+                    "I understand you're looking for information. Our team has extensive experience in web development and can help bring your ideas to life.",
+                    "Thanks for your inquiry! Our development collective focuses on innovative solutions using the latest technologies."
+                ];
+                
+                return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+            }
+            
+            // Auto-open chatbot after a delay
+            setTimeout(() => {
+                if (!isOpen) {
+                    openChatbot();
+                }
+            }, 5000);
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            createLightAnimation();
+            createITAnimation();
+            initChatbot();
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
     </script>
-  </body>
+</body>
 </html>
